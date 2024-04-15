@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles2.css" />
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/decimal.js/9.0.0/decimal.min.js"></script>
+</head>
+
+<body>
+    <div class="content">
+        <div class="cal-content">
+            <div class="display">
+                <input class="dis-content" type="text" name="result" id="result" readonly />
+            </div>
+            <div class="btn-area">
+                <div class="btn-content1">
+                    <div class="calumn">
+                        <button class="special" onClick="display('π')">\( \pi \)</button>
+                        <button class="special" onClick="display('e')">\( e \)</button>
+                        <button class="special" onClick="display('+/-')">\( +/- \)</button>
+                    </div>
+                    <div class="calumn">
+                        <button class="special" onClick="display('√')">\( \sqrt{} \)</button>
+                        <button class="special" onClick="display('log')">\( \log{} \)</button>
+                        <button class="special" onClick="display('ln')">\( \ln{} \)</button>
+                    </div>
+                    <div class="calumn">
+                        <button class="special" onClick="display('sin')">\( \sin{} \)</button>
+                        <button class="special" onClick="display('cos')">\( \cos{} \)</button>
+                        <button class="special" onClick="display('tan')">\( \tan{} \)</button>
+                    </div>
+                    <div class="calumn">
+                        <button class="special" onClick="display('asin')">\( \arcsin{} \)</button>
+                        <button class="special" onClick="display('acos')">\( \arccos{} \)</button>
+                        <button class="special" onClick="display('atan')">\( \arctan{} \)</button>
+                    </div>
+                    <div class="calumn">
+                        <button class="special" onClick="display('sinh')">\( \sinh{} \)</button>
+                        <button class="special" onClick="display('cosh')">\( \cosh{} \)</button>
+                        <button class="special" onClick="display('tanh')">\( \tanh{} \)</button>
+                    </div>
+                </div>
+                <div class="btn-content2">
+                    <div class="calumn">
+                        <button class="special" onClick="window.clear()">C</button>
+                        <button class="special" onClick="backSpace()">BS</button>
+                        <input class="special" type="button" value="(" onClick="display('(')">
+                        <input class="special" type="button" value=")" onClick="display(')')">
+                    </div>
+                    <div class="calumn">
+                        <button class="normal" onClick="display('7')">7</button>
+                        <button class="normal" onClick="display('8')">8</button>
+                        <button class="normal" onClick="display('9')">9</button>
+                        <button class="special" onCLick="display('/')">\[ \div \]</button>
+                    </div>
+                    <div class="calumn">
+                        <button class="normal" onClick="display('4')">4</button>
+                        <button class="normal" onClick="display('5')">5</button>
+                        <button class="normal" onClick="display('6')">6</button>
+                        <button class="special" onCLick="display('*')">\[ \times \]</button>
+                    </div>
+                    <div class="calumn">
+                        <button class="normal" onClick="display('1')">1</button>
+                        <button class="normal" onClick="display('2')">2</button>
+                        <button class="normal" onClick="display('3')">3</button>
+                        <button class="special" onCLick="display('-')">\[ - \]</button>
+                    </div>
+                    <div class="calumn">
+                        <button class="normal" onClick="display('0')">0</button>
+                        <button class="normal" onClick="display('.')">.</button>
+                        <button class="special" onCLick="calculate()">\[ = \]</button>
+                        <button class="special" onCLick="display('+')">\[ + \]</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cons-area">
+            <div class="title">
+                Computation history
+            </div>
+            <div class="console" id="consoleOutput"></div>
+            <div class="clear-area">
+                <input class="clear-btn" type="button" value="clear" onClick="clearConsoleOutput()">
+            </div>
+            <div class="title">
+                Useage
+            </div>
+            <div class="comment">
+                (1) +/-ボタンは式の先頭にのみ機能します. 先頭以外の数値における正負は加算・減算演算子を利用してください.<br />
+                (2) 三角関数・対数関数・平方根ボタンを使う際は, 対象数値または式を入力後, 右括弧で閉じてください.<br />
+                ex. "\(\mathrm{sin(}\)" \(\rightarrow\) "\(\mathrm{sin(expression}\)" \(\rightarrow\)
+                "\(\mathrm{sin(expression)}\)" <br />
+                (3) \(\log{}\)は常用対数, \(\ln{}\)は自然対数です.<br />
+                (4) 乗算を行う場合は, 必ず乗算演算子を用いてください. 乗算演算子の省略は認めません. <br />
+                (5) キーボード入力にも対応しています. 以下は, 各種ボタンとキーボードの対応表です. <br />
+                <table>
+                    <td>
+                        <table border="1">
+                            <tr>
+                                <th>ボタン</th>
+                                <th>キーボード</th>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>Delete</td>
+                            </tr>
+                            <tr>
+                                <td>BS</td>
+                                <td>BackSpace</td>
+                            </tr>
+                            <tr>
+                                <td>\(+/-\)</td>
+                                <td>@</td>
+                            </tr>
+                            <tr>
+                                <td>0~1</td>
+                                <td>0~1</td>
+                            </tr>
+                            <tr>
+                                <td>.</td>
+                                <td>.</td>
+                            </tr>
+                            <tr>
+                                <td>\(+\)</td>
+                                <td>+ (Shift+;)</td>
+                            </tr>
+                            <tr>
+                                <td>\(-\)</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>\(\times\)</td>
+                                <td>* (Shift+:)</td>
+                            </tr>
+                            <tr>
+                                <td>\(\div\)</td>
+                                <td>/</td>
+                            </tr>
+                            <tr>
+                                <td>(</td>
+                                <td>( (Shift+8)</td>
+                            </tr>
+                            <tr>
+                                <td>)</td>
+                                <td>) (Shift+9)</td>
+                            </tr>
+                            <tr>
+                                <td>\(\pi\)</td>
+                                <td>\pi+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(e\)</td>
+                                <td>\e+Tab</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table border="1">
+                            <tr>
+                                <th>ボタン</th>
+                                <th>キーボード</th>
+                            </tr>
+                            <tr>
+                                <td>\(\sqrt{}\)</td>
+                                <td>\sqrt+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(\log{}\)</td>
+                                <td>\log+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(\ln{}\)</td>
+                                <td>\ln+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(\sin{}\)</td>
+                                <td>\sin+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(\cos{}\)</td>
+                                <td>\cos+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(\tan{}\)</td>
+                                <td>\tan+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(\arcsin{}\)</td>
+                                <td>\asin+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(\arccos{}\)</td>
+                                <td>\acos+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(\arctan{}\)</td>
+                                <td>\atan+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(\sinh{}\)</td>
+                                <td>\sinh+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(\cosh{}\)</td>
+                                <td>\cosh+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(\tanh{}\)</td>
+                                <td>\tanh+Tab</td>
+                            </tr>
+                            <tr>
+                                <td>\(=\)</td>
+                                <td>= or Enter</td>
+                            </tr>
+                        </table>
+                    </td>
+                </table>
+                (6) 計算履歴を消去する際には, clearボタンを利用してください. なお, clearボタンの対応キーはInsertです.
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="cal.js"></script>
+</body>
+
+</html>
